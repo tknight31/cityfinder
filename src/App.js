@@ -11,7 +11,9 @@ class App extends Component {
     this.state={
       cityLinks: [],
       cities: [],
-      cityScores: []
+      cityScores: [],
+      topFiveCities: [],
+      topFiveCityDetails: []
     }
   }
 
@@ -64,12 +66,37 @@ class App extends Component {
 
 
    handleSubmit = (obj) => {
-      console.log(obj)
-     // when i submit
-     // grab state
-     // do something
+      const cityInfo = []
+      this.state.cityScores.forEach(city => cityInfo.push(city.categories))
+      const cityInfo2 = cityInfo.map(city => {
+        return city.map(category => (parseFloat(obj[category.name]) * category['score_out_of_10']))
+      })
+      const cityInfo3 = cityInfo2.map((city, index) => {
+        return {[index]:  (city.reduce((sum, value) => sum + value))}
+      })
+
+      function compare(a,b) {
+        if (Object.values(a)[0] < Object.values(b)[0])
+          return 1;
+        if (Object.values(a)[0] > Object.values(b)[0])
+          return -1;
+        return 0;
+      }
+      cityInfo3.sort(compare)
+      this.setState({
+        topFiveCities: cityInfo3.slice(0,5)
+        .map(city => Object.keys(city))
+        .map(i => this.state.cities[i]),
+
+        topFiveCityDetails: cityInfo3.slice(0,5)
+        .map(city => Object.keys(city))
+        .map(i => this.state.cityScores[i])
+
+      })
+
     }
 
+    
 
 
   getCityScores = () => {
@@ -80,20 +107,13 @@ class App extends Component {
   // calculateScore()
 
   render() {
-    // console.log("LINKS")
-    // console.log(this.state.cityLinks)
-    // console.log("CITIES")
-    // console.log(this.state.cities)
-    // console.log("SCORES")
-    console.log(this.state.cityScores)
     return (
       <div className="App">
         <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
           <h2>NotSoShittyCity</h2>
         </div>
+        <CityList topFiveCities={this.state.topFiveCities} topFiveCityDetails={this.state.topFiveCityDetails}/>
         <Form handleSubmit={this.handleSubmit}/>
-
       </div>
     );
   }
