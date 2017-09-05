@@ -28,16 +28,21 @@ class City extends React.Component {
 
 	}
 
-	// componentDidUpdate(){
-	// 	fetch(`https://api.teleport.org/api/urban_areas/slug:${this.props.city.slug}/details/`)
-	// 	.then(resp => resp.json())
-	// 	.then(i => this.setState({ cityDetails: i}))
+	componentWillReceiveProps(nextProps){
 
-	// 	fetch(`https://api.teleport.org/api/urban_areas/slug:${this.props.city.slug}/scores/`)
-	// 	.then(resp => resp.json())
-	// 	.then(i => this.setState({ cityScores: i} ))
-	// }
+		fetch(`https://api.teleport.org/api/urban_areas/slug:${nextProps.city.slug}/details/`)
+		.then(resp => resp.json())
+		.then(i => this.setState({ cityDetails: i}))
 
+		fetch(`https://api.teleport.org/api/urban_areas/slug:${nextProps.city.slug}/scores/`)
+		.then(resp => resp.json())
+		.then(i => this.setState({ cityScores: i} ))
+
+		fetch(`https://api.teleport.org/api/urban_areas/slug:${nextProps.city.slug}/images/`)
+		.then(resp => resp.json())
+		.then(i => this.setState({ cityImages: i} ))
+
+	}
 
 	render() {
 		if (this.state.cityImages['photos']) {
