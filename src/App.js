@@ -33,7 +33,7 @@ class App extends Component {
         const cityLinks = allUrbanAreas['_links']['ua:item'].map( city => city.href )
         const cityScores = []
         const cities = []
-        cityLinks.forEach(link => { 
+        cityLinks.forEach(link => {
             fetch(link+"scores")
               .then(resp => resp.json())
               .then(area =>  {
@@ -46,7 +46,7 @@ class App extends Component {
           .then(resp => resp.json())
           .then(area =>  {
             cities.push(area)
-          }) 
+          })
         })
 
 
@@ -96,11 +96,11 @@ class App extends Component {
 
     }
 
-    
+
 
 
   getCityScores = () => {
-     
+
   }
 
 
@@ -110,7 +110,7 @@ class App extends Component {
     return (
       <div className="App">
         <div className="App-header">
-          <h2>NotSoShittyCity</h2>
+          <h2>City Finder</h2>
         </div>
         <CityList topFiveCities={this.state.topFiveCities} topFiveCityDetails={this.state.topFiveCityDetails}/>
         <Form handleSubmit={this.handleSubmit}/>

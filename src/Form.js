@@ -42,9 +42,9 @@ export default class Form extends React.Component{
 	handleSubmit = (event) => {
 		event.preventDefault()
 
-		const values = Object.values(this.state) 
+		const values = Object.values(this.state)
 		const sum = values.reduce( (prev, curr) => parseInt(prev) + parseInt(curr) )
-		
+
 		this.props.handleSubmit(this.state)
 	}
 
@@ -73,15 +73,12 @@ export default class Form extends React.Component{
 					<div><label>Outdoors</label><input min="0" max="20" type="number" name="Outdoors" className="inputField" onChange={this.handleInputChange} defaultValue={this.state['Outdoors']} required/></div>
 
 
-					<input type="submit" value="Avoid Shitty Cities" / >
+					<input type="submit" value="Find Cities" / >
 
 				</form>
-				
+
 			</div>
 			)
 	}
 
 }
-
-
-
